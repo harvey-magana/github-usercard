@@ -60,7 +60,8 @@ const followersArray = [];
     bigknell
 */
 
-let cardMaker = (imgURL) => {
+let cardMaker = (data) => {
+  console.log(data[1]["avatar_url"])
   let card = document.createElement('div')
   let cardImg = document.createElement('img')
   let cardInfo = document.createElement('div')
@@ -74,12 +75,22 @@ let cardMaker = (imgURL) => {
   let bio = document.createElement('p')
 
   card.classList.add('card')
-  cardImg.src = imgURL;
+  cardImg.src = data[1]["avatar_url"];
   cardInfo.classList.add('card-info');
   name.classList.add('name');
   username.classList.add('username');
 
+  name.textContent = data[1]["name"]
+
+  profile.appendChild(address);
   card.appendChild(cardImg);
+  card.appendChild(name);
+  card.appendChild(username);
+  card.appendChild(location);
+  card.appendChild(profile);
+  card.appendChild(followers);
+  card.appendChild(following);
+  card.appendChild(bio);
 
   return card;
 }
@@ -87,13 +98,13 @@ let cardMaker = (imgURL) => {
 let entry = document.querySelector('.cards');
 // step 1
 axios.get("https://api.github.com/users/harvey-magana")
-  .then((successResponse) => {
-    console.log(Object.entries(successResponse));
-    Object.entries(successResponse.data).forEach( (url) => {
-      let newCard = cardMaker(url);
-      entry.appendChild(newCard);
-    })
+.then((successResponse) => {
+  console.log(successResponse.data, "the data");
+  Object.entries(successResponse).forEach( (url) => {
+    let newCard = cardMaker(url);
+    entry.appendChild(newCard);
   })
-  .catch((errorResponse) => {
-    console.log('error!', errorResponse);
-  })
+})
+.catch((errorResponse) => {
+  console.log('error!', errorResponse);
+})
