@@ -12,6 +12,7 @@
     Skip to STEP 3.
 */
 
+
 /*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
@@ -58,3 +59,41 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+let cardMaker = (imgURL) => {
+  let card = document.createElement('div')
+  let cardImg = document.createElement('img')
+  let cardInfo = document.createElement('div')
+  let name = document.createElement('h3')
+  let username = document.createElement('p')
+  let location = document.createElement('p')
+  let profile = document.createElement('p')
+  let address = document.createElement('a')
+  let followers = document.createElement('p')
+  let following = document.createElement('p')
+  let bio = document.createElement('p')
+
+  card.classList.add('card')
+  cardImg.src = imgURL;
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+
+  card.appendChild(cardImg);
+
+  return card;
+}
+
+let entry = document.querySelector('.cards');
+// step 1
+axios.get("https://api.github.com/users/harvey-magana")
+  .then((successResponse) => {
+    console.log(Object.entries(successResponse));
+    Object.entries(successResponse.data).forEach( (url) => {
+      let newCard = cardMaker(url);
+      entry.appendChild(newCard);
+    })
+  })
+  .catch((errorResponse) => {
+    console.log('error!', errorResponse);
+  })
