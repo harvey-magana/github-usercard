@@ -1,3 +1,5 @@
+import { blueviolet } from "color-name";
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -80,17 +82,26 @@ let cardMaker = (data) => {
   name.classList.add('name');
   username.classList.add('username');
 
-  name.textContent = data[1]["name"]
+  name.textContent = data[1]["name"];
+  username.textContent = data[1]["login"];
+  location.textContent = "Location: " + data[1]["location"];
+  profile.textContent = "Profile: ";
+  address.setAttribute('href', data[1]["html_url"]);
+  address.textContent = data[1]["html_url"];
+  followers.textContent = "Followers: " + data[1]["followers"];
+  following.textContent = "Following: " + data[1]["following"];
+  bio.textContent = "Bio: " + data[1]["bio"];
 
   profile.appendChild(address);
   card.appendChild(cardImg);
-  card.appendChild(name);
-  card.appendChild(username);
-  card.appendChild(location);
-  card.appendChild(profile);
-  card.appendChild(followers);
-  card.appendChild(following);
-  card.appendChild(bio);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
 
   return card;
 }
